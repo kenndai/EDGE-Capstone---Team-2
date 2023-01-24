@@ -8,7 +8,7 @@ import psycopg2
 
 # this connects to the Docker container running postgres:
 conn = psycopg2.connect(
-    host="localhost",
+    host="localhost",  # this will change to point to our rds database
     database="postgres",
     user="postgres",
     password="test")
