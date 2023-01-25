@@ -6,4 +6,4 @@ class Customer(BaseModel):
     first_name: str
     last_name: str
     email_address: str
-    address_id: Address.address_id
+    address_id: Address
