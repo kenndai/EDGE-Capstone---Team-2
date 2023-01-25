@@ -7,6 +7,12 @@ from Accounts.Models.customer import Customer
 
 
 class AccountRepository():
+
+    host = "localhost"
+    database = "accounts"
+    user = ""
+    password = ""
+
     def insert(self, account: Account) -> Account:
         with psycopg2.connect() as db:
             with db.cursor() as cursor:
@@ -17,7 +23,7 @@ class AccountRepository():
                         RETURNING id
                     """, {
                     'account_num': account.account_num,
-                    'customer_id': account.customer_id,
+                    'customer_id': account.customer.id,
                     'current_balance': account.current_balance,
                 })
                 account.account_id = cursor.fetchone()[0]
@@ -30,9 +36,9 @@ class AccountRepository():
                     'acccount_num': account.account_num
                 })
                 row = cursor.fetchone()
-        return Account.construct(account_id=row[0], account_num=row[1], customer_id=Customer.construct(customer_id=row[2]), current_balance=round(row[3], 2))
+        return Account.construct(account_id=row[0], account_num=row[1], customer=Customer.construct(customer_id=row[2]), current_balance=round(row[3], 2))
 
-    def get_all(self, account: Account) -> 'list[Account]':
+    def get_all(self) -> 'list[Account]':
         result_accounts = []
         with psycopg2.connect() as db:
             with db.cursor() as cursor:
@@ -40,11 +46,11 @@ class AccountRepository():
                 all_accounts = cursor.fetchall()
 
         for acc in all_accounts:
-            result_accounts.append(Account.construct(account_id=acc[0], account_num=acc[1], customer_id=Customer.construct(customer_id=acc[2]), current_balance=round(acc[3], 2)))
+            result_accounts.append(Account.construct(account_id=acc[0], account_num=acc[1], customer=Customer.construct(customer_id=acc[2]), current_balance=round(acc[3], 2)))
 
         return result_accounts
 
-    def update_account(self, account: Account) -> None:
+    def update(self, account: Account) -> None:
         with psycopg2.connect() as db:
             with db.cursor() as cursor:
                 cursor.execute("""
