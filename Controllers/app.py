@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+import psycopg2
 from Accounts.Models.account import Account
 from Accounts.Services.account_service import AccountService
 from Accounts.Repositories.account_repository import AccountRepository
@@ -7,7 +8,20 @@ from Accounts.Repositories.customer_repository import customer_repository
 from Accounts.Repositories.address_repository import AddressRepository
 from typing import List
 
+conn = psycopg2.connect(
+    host="localhost",  # this will change to point to our rds database
+    database="postgres",
+    user="postgres",
+    password="test")
+
+# initalize database
+cursor = conn.cursor()
+cursor.execute(open("../data-def.sql", "r").read())
+conn.close()
+
 app = FastAPI()
+
+
 address_repository = AddressRepository()
 customer_repository = customer_repository()
 account_repository = AccountRepository()
