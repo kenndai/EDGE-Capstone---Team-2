@@ -33,8 +33,8 @@ class AddressRepository():
                                 password=self.password) as db:
             with db.cursor() as cursor:    
                 cursor.execute("""
-                    SELECT AddressID, Street, City, State, ZipCode FROM
-                        address WHERE AddressID=%(address_id)s
+                    SELECT ID, Street, City, State, ZipCode FROM
+                        address WHERE ID=%(address_id)s
                     """, {
                     'address_id': address_id
                     }
@@ -48,7 +48,7 @@ class AddressRepository():
                                 password=self.password) as db:
             with db.cursor() as cursor: 
                 cursor.execute("""
-                    DELETE FROM address WHERE AddressID=%(address_id)s
+                    DELETE FROM address WHERE ID=%(address_id)s
                     """, {
                         'address_id': address_id
                     }
