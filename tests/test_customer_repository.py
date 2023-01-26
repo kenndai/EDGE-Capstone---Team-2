@@ -1,8 +1,8 @@
 import unittest
-from accounts.models.address import Address
-from accounts.repositories.address import AddressRepository
-from accounts.models.customer import Customer
-from accounts.repositories.customer import CustomerRepository
+from Accounts.Models.address import Address
+from Accounts.Repositories.address_repository import AddressRepository
+from Accounts.Models.customer import Customer
+from Accounts.Repositories.customer_repository import CustomerRepository
 
 
 class TestCustomerRepository(unittest.TestCase):
