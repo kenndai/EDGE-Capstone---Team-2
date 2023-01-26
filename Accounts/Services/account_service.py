@@ -37,6 +37,12 @@ class AccountService():
         self.account_repository.update(account)
         return self.get_account(account_num)
 
+    def deposit(self, account_number: str, amount: float) -> Account:
+        account = self.account_repository.get_account_by_number(account_number)
+        account.current_balance += amount
+        self.account_repository.update(account)
+        return self.get_account(account_number)
+
     def close_account(self, account_num: str) -> None:
         account = self.get_account(account_num)
         self.account_repository.delete(account.account_id)

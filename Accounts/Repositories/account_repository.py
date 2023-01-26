@@ -1,4 +1,3 @@
-# import psycopg2
 from unittest import result
 from dbconnect import cursor
 import psycopg2
@@ -18,7 +17,7 @@ class AccountRepository():
             with db.cursor() as cursor:
                 cursor.execute("""
                     INSERT INTO account
-                        (AccountNumber, Customer, CurrentBalance) VALUES
+                        (AccountNumber, CustomerID, CurrentBalance) VALUES
                         (%(account_num)s, %(customer_id)s, %(current_balance)s)
                         RETURNING id
                     """, {
